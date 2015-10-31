@@ -8,5 +8,5 @@ roster = [
 	'Halfling',
 	'Human',
 	'Orc',
-	'Orgre'
+	'Ogre'
 ]
