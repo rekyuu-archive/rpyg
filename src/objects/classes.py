@@ -99,7 +99,8 @@ class BaseClass (object):
 		self.CUR_HP		= self.HP
 		self.ATTACK		= get_stat(self.BASE_ATTACK, self.IV[1], self.LV)
 		self.INTEL 		= get_stat(self.BASE_INTEL, self.IV[2], self.LV)
-		self.MP	 		= get_mp_stat(self.BASE_INTEL, self.LV)
+		self.MP	 		= get_mp_stat(self.BASE_INTEL, self.LV) + self.LV
+		self.CUR_MP	 	= self.MP
 		self.DEFENSE	= get_stat(self.BASE_DEFENSE, self.IV[3], self.LV)
 		self.SPEED 		= get_stat(self.BASE_SPEED, self.IV[4], self.LV)
 
@@ -116,12 +117,12 @@ class BaseClass (object):
 
 	def __str__ (self):
 
-		return ('\n'
-			+ '-- Level ' + str(self.LV) + ' --\n'
-			+ 'Class: ' + self.NAME + '\n'
-			+ '   HP: ' + str(self.HP) + '\n'
-			+ '   MP: ' + str(self.MP) + '\n'
-			+ '  ATK: ' + str(self.ATTACK) + '\n'
-			+ '  INT: ' + str(self.INTEL) + '\n'
-			+ '  DEF: ' + str(self.DEFENSE) + '\n'
-			+ '  SPD: ' + str(self.SPEED) + '\n')
+		return (
+			' Level: ' + str(self.LV) + '\n'
+			+ '    HP: ' + str(self.CUR_HP) + '/' + str(self.HP) + '\n'
+			+ '    MP: ' + str(self.CUR_MP) + '/' + str(self.MP) + '\n'
+			+ '   ATK: ' + str(self.ATTACK) + '\n'
+			+ '   INT: ' + str(self.INTEL) + '\n'
+			+ '   DEF: ' + str(self.DEFENSE) + '\n'
+			+ '   SPD: ' + str(self.SPEED)
+		)

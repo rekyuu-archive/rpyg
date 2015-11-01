@@ -13,6 +13,18 @@ class Character (object):
 		self.TITLE	= '{0} the {1} {2}'.format(self.NAME, self.RACE, self.CLASS)
 		self.STATS	= classes.BaseClass(self.CLASS, self.SEED, class_defs.roster[self.CLASS]['stats'])
 
-	def __str__ (self):
+		header = []
+		i = len(list(self.TITLE))
+		while i > 0:
+			header.append('=')
+			i -= 1
+		self.header = ''.join(header)
 
-		return self.TITLE + '\n' + str(self.STATS)
+	def __str__ (self):
+		return (
+			' ' + self.TITLE + '\n'
+			+ ' '
+			+ self.header
+			+ '\n'
+			+ str(self.STATS)
+		)
