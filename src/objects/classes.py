@@ -73,28 +73,30 @@ def get_mp_stat (stat, lv):
 
 
 # Blank class.
-class Class (object):
+class BaseClass (object):
 
-	def __init__ (self, name, ivs, attack, intel, defense, speed):
+	def __init__ (self, name, seed, stat_list):
 
 		self.NAME 				= name
+		self.SEED				= seed
 
 		# Base stats.
-		self.IV					= ivs
+		self.IV					= get_ivs(self.SEED)
 		self.LV					= 1
 		self.XP					= 1
 		self.BASE_HP			= 20
-		self.BASE_ATTACK		= attack
-		self.BASE_INTEL 		= intel
+		self.BASE_ATTACK		= stat_list[0]
+		self.BASE_INTEL 		= stat_list[1]
 		self.BASE_MP	 		= 10
-		self.BASE_DEFENSE		= defense
-		self.BASE_SPEED 		= speed
+		self.BASE_DEFENSE		= stat_list[2]
+		self.BASE_SPEED 		= stat_list[3]
 
 		self.update_stats()
 
 	def update_stats (self):
 
 		self.HP			= get_stat(self.BASE_HP, self.IV[0], self.LV) + self.LV
+		self.CUR_HP		= self.HP
 		self.ATTACK		= get_stat(self.BASE_ATTACK, self.IV[1], self.LV)
 		self.INTEL 		= get_stat(self.BASE_INTEL, self.IV[2], self.LV)
 		self.MP	 		= get_mp_stat(self.BASE_INTEL, self.LV)
@@ -112,10 +114,9 @@ class Class (object):
 		self.LV = get_level(self.XP)
 		self.update_stats()
 
-	def get_stats (self):
+	def __str__ (self):
 
-		print(
-			'\n'
+		return ('\n'
 			+ '-- Level ' + str(self.LV) + ' --\n'
 			+ 'Class: ' + self.NAME + '\n'
 			+ '   HP: ' + str(self.HP) + '\n'
@@ -123,129 +124,4 @@ class Class (object):
 			+ '  ATK: ' + str(self.ATTACK) + '\n'
 			+ '  INT: ' + str(self.INTEL) + '\n'
 			+ '  DEF: ' + str(self.DEFENSE) + '\n'
-			+ '  SPD: ' + str(self.SPEED) + '\n'
-		)
-
-
-class Warrior (Class):
-
-	def __init__ (self, seed):
-
-		self.seed = seed
-		self.ivs = get_ivs(self.seed)
-		Class.__init__(self, 'Warrior', self.ivs, 20, 10, 15, 15)
-
-
-class Rogue (Class):
-
-	def __init__ (self, seed):
-
-		self.seed = seed
-		self.ivs = get_ivs(self.seed)
-		Class.__init__(self, 'Rogue', self.ivs, 20, 15, 10, 15)
-
-
-class Barbarian (Class):
-
-	def __init__ (self, seed):
-
-		self.seed = seed
-		self.ivs = get_ivs(self.seed)
-		Class.__init__(self, 'Barbarian', self.ivs, 20, 15, 15, 10)
-
-
-class Mage (Class):
-
-	def __init__ (self, seed):
-
-		self.seed = seed
-		self.ivs = get_ivs(self.seed)
-		Class.__init__(self, 'Mage', self.ivs, 10, 20, 15, 15)
-
-
-class Ranger (Class):
-
-	def __init__ (self, seed):
-
-		self.seed = seed
-		self.ivs = get_ivs(self.seed)
-		Class.__init__(self, 'Ranger', self.ivs, 15, 20, 10, 15)
-
-
-class Bard (Class):
-
-	def __init__ (self, seed):
-
-		self.seed = seed
-		self.ivs = get_ivs(self.seed)
-		Class.__init__(self, 'Bard', self.ivs, 15, 20, 15, 10)
-
-
-class Paladin (Class):
-
-	def __init__ (self, seed):
-
-		self.seed = seed
-		self.ivs = get_ivs(self.seed)
-		Class.__init__(self, 'Paladin', self.ivs, 10, 15, 20, 15)
-
-
-class Juggernaut (Class):
-
-	def __init__ (self, seed):
-
-		self.seed = seed
-		self.ivs = get_ivs(self.seed)
-		Class.__init__(self, 'Juggernaut', self.ivs, 15, 10, 20, 15)
-
-
-class Tinkerer (Class):
-
-	def __init__ (self, seed):
-
-		self.seed = seed
-		self.ivs = get_ivs(self.seed)
-		Class.__init__(self, 'Tinkerer', self.ivs, 15, 15, 20, 10)
-
-
-class Theif (Class):
-
-	def __init__ (self, seed):
-
-		self.seed = seed
-		self.ivs = get_ivs(self.seed)
-		Class.__init__(self, 'Theif', self.ivs, 10, 15, 15, 20)
-
-
-class Brawler (Class):
-
-	def __init__ (self, seed):
-
-		self.seed = seed
-		self.ivs = get_ivs(self.seed)
-		Class.__init__(self, 'Brawler', self.ivs, 15, 10, 15, 20)
-
-
-class Hunter (Class):
-
-	def __init__ (self, seed):
-
-		self.seed = seed
-		self.ivs = get_ivs(self.seed)
-		Class.__init__(self, 'Hunter', self.ivs, 15, 15, 10, 20)
-
-
-roster = [
-	'Warrior',
-	'Rogue',
-	'Barbarian',
-	'Mage',
-	'Ranger',
-	'Bard',
-	'Paladin',
-	'Juggernaut',
-	'Tinkerer',
-	'Theif',
-	'Brawler',
-	'Hunter'
-]
+			+ '  SPD: ' + str(self.SPEED) + '\n')

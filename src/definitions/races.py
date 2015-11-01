@@ -3,6 +3,7 @@ roster = [
 	'Dwarf',
 	'Elf',
 	'Gnome',
+	'Goblin',
 	'Half-elf',
 	'Half-orc',
 	'Halfling',
