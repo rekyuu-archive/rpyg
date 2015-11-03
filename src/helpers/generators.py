@@ -79,10 +79,10 @@ def dungeon (x, y, seed=None):
 			}
 
 			entities = {
-				'items' = [],
-				'objects' = [],
-				'enemies' = [],
-				'npcs' = []
+				'items': [],
+				'objects': [],
+				'enemies': [],
+				'npcs': []
 			}
 
 			row.append(tiles.DungeonTile(walls, entities))
