@@ -1,6 +1,5 @@
-from definitions import classes, races
+from helpers import generators as gen
 from objects import characters
-import random
 
 
 """
@@ -16,32 +15,6 @@ TODO:
 """
 
 
-class_list 	= classes.roster
-race_list 	= races.roster
-
-
-# Generates a 8-digit seed if one was not provided.
-def seed_gen (seed=None):
-
-	if seed == None or seed == '':
-		seed = []
-		for i in range(8):
-			seed.append(str(random.randint(0,9)))
-		return ''.join(seed)
-	else:
-		return seed
-
-
-# Provides a random race and class for the character.
-def randomizer (seed=None):
-
-	random.seed(seed)
-
-	random_race = race_list[random.randint(0, len(race_list) - 1)]
-	random_class = random.choice(sorted(list(class_list.keys())))
-	return {'race': random_race, 'class': random_class}
-
-
 # Runs the main program.
 def main ():
 
@@ -50,8 +23,8 @@ def main ():
 	print('Seed? (Leave blank for a random seed)')
 	io_seed = input('> ')
 
-	seed = seed_gen(io_seed)
-	rand = randomizer(seed)
+	seed = gen.seed(io_seed)
+	rand = gen.randomizer(seed)
 
 	print('Generating character {} with seed {}...'.format(name, seed))
 	char = characters.Character(name, seed, rand)
