@@ -16,23 +16,23 @@ TODO:
 """
 
 
-class_list 		= classes.roster
-race_list 		= races.roster
+class_list 	= classes.roster
+race_list 	= races.roster
 
 
+# Generates a 8-digit seed if one was not provided.
 def seed_gen (seed=None):
 
 	if seed == None or seed == '':
 		seed = []
-		i = 8
-		while i >= 0:
+		for i in range(8):
 			seed.append(str(random.randint(0,9)))
-			i -= 1
-		return int(''.join(seed))
+		return ''.join(seed)
 	else:
 		return seed
 
 
+# Provides a random race and class for the character.
 def randomizer (seed=None):
 
 	random.seed(seed)
@@ -42,7 +42,8 @@ def randomizer (seed=None):
 	return {'race': random_race, 'class': random_class}
 
 
-def start ():
+# Runs the main program.
+def main ():
 
 	print('Name your character.')
 	name = input('> ')
@@ -61,5 +62,5 @@ def start ():
 
 
 if __name__ == '__main__':
-	
-	start()
+
+	main()

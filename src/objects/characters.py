@@ -21,6 +21,7 @@ class Character (object):
 		self.header = ''.join(header)
 
 	def __str__ (self):
+		
 		return (
 			' ' + self.TITLE + '\n'
 			+ ' '
