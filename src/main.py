@@ -10,7 +10,7 @@ TODO:
 - Add battle handling
 - Add specials
 - Add initial generation and database handling
-- Port to Telegram
+- Port to some sort of JSON API or something???
 - Add webui
 """
 
@@ -24,14 +24,14 @@ def main ():
 	io_seed = input('> ')
 
 	seed = gen.seed(io_seed)
-	rand = gen.randomizer(seed)
+	char = gen.character(seed)
 
 	print('Generating character {} with seed {}...'.format(name, seed))
-	char = characters.Character(name, seed, rand)
+	player = characters.Character(name, seed, char)
 
 	print('Character created. Here are your stats:')
 	print()
-	print(char)
+	print(player)
 
 
 if __name__ == '__main__':

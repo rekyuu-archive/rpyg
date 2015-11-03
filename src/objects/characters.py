@@ -60,7 +60,7 @@ def get_ivs (seed):
 # Returns the final stat using the following equation.
 def get_stat (stat, iv, lv):
 
-	return int(((((stat + iv) * 6) * lv) / (10)) + 5)
+	return int((stat + iv) * 6 * lv / 10 + 5)
 
 
 # Returns the final stat using the following equation.
@@ -69,6 +69,7 @@ def get_mp_stat (stat, lv):
 	return int(get_stat(stat, 0, lv) / 3)
 
 
+# Character creation class.
 class Character (object):
 
 	def __init__ (self, name, seed, rand):

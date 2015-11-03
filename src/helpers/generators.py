@@ -1,4 +1,4 @@
-from definitions import classes, races
+from definitions import classes, races, tiles
 import random
 
 
@@ -19,10 +19,71 @@ def seed (seed=None):
 
 
 # Provides a random race and class for the character.
-def randomizer (seed=None):
+def character (seed=None):
 
 	random.seed(seed)
 
 	random_race = race_list[random.randint(0, len(race_list) - 1)]
 	random_class = random.choice(sorted(list(class_list.keys())))
 	return {'race': random_race, 'class': random_class}
+
+
+# Generates a random dungeon map.
+def dungeon (x, y, seed=None):
+
+	"""
+	Example of intended generation:
+
+	world = dungeon(3,3)
+	[
+		[1, 2, 3],
+		[4, 5, 6],
+		[7, 8, 9]
+	]
+	world[0][1] = 2
+
+	@ = Player
+	X = Enemy
+	& = Boss
+	$ = Loot
+	~ = Key
+	% = NPC
+	# = Locked door (requires key)
+	: = Entrance / Exit (randomly placed)
+		- Exit should be locked until the boss is destroyed
+
+	+---+---+---+
+	| $   X | ~ |
+	+---+   +   +
+	: @   %     :
+	+   +---+   +
+	| X | & #   |
+	+---+---+---+
+	"""
+
+	random.seed(seed)
+	dungeon_map = []
+
+	for i in range(y):
+
+		row = []
+
+		for j in range(x):
+
+			walls = {
+				'north' 	: False,
+				'east'		: False,
+				'south'		: False,
+				'west'		: False
+			}
+
+			entities = {
+				'items' = [],
+				'objects' = [],
+				'enemies' = [],
+				'npcs' = []
+			}
+
+			row.append(tiles.DungeonTile(walls, entities))
+
+		dungeon_map.append(row)
