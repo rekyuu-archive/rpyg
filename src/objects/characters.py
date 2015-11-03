@@ -131,7 +131,8 @@ class Character (object):
 
 		return (
 			' ' + self.TITLE + '\n'
-			+ ' ' + self.header	+ '\n'
+			+ ' ' + self.header
+			+ '\n'
 			+ ' Level: ' + str(self.LV) + '\n'
 			+ '    HP: ' + str(self.CUR_HP) + '/' + str(self.HP) + '\n'
 			+ '    MP: ' + str(self.CUR_MP) + '/' + str(self.MP) + '\n'
