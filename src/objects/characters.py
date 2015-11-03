@@ -52,12 +52,8 @@ def get_ivs (seed):
 
 	random.seed(seed)
 	ivs = []
-	i = 4
-
-	while i >= 0:
+	for i in range(5):
 		ivs.append(random.randint(0,7))
-		i -= 1
-
 	return ivs
 
 
