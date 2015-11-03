@@ -1,4 +1,5 @@
-from definitions import classes, races, tiles
+from definitions import classes, races
+from objects import tiles
 import random
 
 
