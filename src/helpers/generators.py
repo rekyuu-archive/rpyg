@@ -70,15 +70,13 @@ def dungeon (x, y, seed=None):
 	for i in range(y):
 		row = []
 		for j in range(x):
-			walls =
-			{
+			walls =	{
 				'north' 	: True,
 				'east'		: True,
 				'south'		: True,
 				'west'		: True
 			}
-			entities =
-			{
+			entities = {
 				'items': [],
 				'objects': [],
 				'enemies': [],
@@ -87,15 +85,14 @@ def dungeon (x, y, seed=None):
 			row.append(tiles.DungeonTile(walls, entities))
 		grid.append(row)
 
-	# Picks a random starting entrance tile along the eastern ([0]) side.
-	row = random.randint(0, len(maze) - 1)
+	# Picks a random starting entrance tile along the western ([0]) side.
+	row = random.randint(0, len(grid) - 1)
 	col = 0
 
 	entrance = grid[row][col]
 	entrance.visited()
 
 	# Defines the selected tile and starts the stack.
-	current = entrance
 	stack = [(row, col)]
 
 	while len(stack) > 0:
@@ -103,39 +100,48 @@ def dungeon (x, y, seed=None):
 
 		while len(directions) > 0:
 			direction = random.choice(directions)
-			
+
 			if direction == 'north':
 				if row - 1 >= 0:
 					if grid[row - 1][col].VISITED == False:
 						grid[row][col].remove_wall('north')
 						row -= 1
 						grid[row][col].remove_wall('south')
-						grid[row][col].visted()
+						grid[row][col].visited()
 						stack.append((row, col))
+						break
 					else:
 						directions.remove('north')
+				else:
+					directions.remove('north')
 
 			elif direction == 'east':
-				if col + 1 <= len(grid[row]):
+				if col + 1 <= len(grid[row]) - 1:
 					if grid[row][col + 1].VISITED == False:
 						grid[row][col].remove_wall('east')
 						col += 1
 						grid[row][col].remove_wall('west')
-						grid[row][col].visted()
+						grid[row][col].visited()
 						stack.append((row, col))
+						break
 					else:
 						directions.remove('east')
+				else:
+					directions.remove('east')
 
 			elif direction == 'south':
-				if row + 1 <= len(grid):
+				if row + 1 <= len(grid) - 1:
 					if grid[row + 1][col].VISITED == False:
 						grid[row][col].remove_wall('south')
 						row += 1
 						grid[row][col].remove_wall('north')
-						grid[row][col].visted()
+						grid[row][col].visited()
 						stack.append((row, col))
+						break
 					else:
 						directions.remove('south')
+				else:
+					directions.remove('south')
 
 			elif direction == 'west':
 				if col - 1 >= 0:
@@ -143,12 +149,20 @@ def dungeon (x, y, seed=None):
 						grid[row][col].remove_wall('west')
 						col -= 1
 						grid[row][col].remove_wall('east')
-						grid[row][col].visted()
+						grid[row][col].visited()
 						stack.append((row, col))
+						break
 					else:
 						directions.remove('west')
+				else:
+					directions.remove('west')
 
 		if len(directions) == 0:
 			stack.pop()
-			row = stack[-1][0]
-			col = stack[-1][1]
+
+			if len(stack) > 0:
+				row = stack[-1][0]
+				col = stack[-1][1]
+
+	# Picks a random exit tile along the eastern ([-1]) side.
+	exit = grid[random.randint(0, len(grid) - 1)][-1]
