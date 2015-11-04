@@ -12,6 +12,10 @@ class DungeonTile (object):
 		self.WALL_SOUTH	= walls['south']
 		self.WALL_WEST	= walls['west']
 
+		# Defines if the tile is an entrance or exit.
+		self.ENTRANCE	= False
+		self.EXIT		= False
+
 		# Defines a list of items on the tile.
 		self.ITEMS = entities['items']
 
@@ -24,6 +28,7 @@ class DungeonTile (object):
 		# Defines a list of NPCs on the tile.
 		self.NPCS = entities['npcs']
 
+	# Removes walls during generation.
 	def remove_wall (self, wall):
 
 		if wall == 'north':
@@ -35,10 +40,22 @@ class DungeonTile (object):
 		elif wall == 'west':
 			self.WALL_WEST = False
 
+	# Marks a tile as processed during generation.
 	def visited (self):
 
 		self.VISITED = True
 
+	# Sets the tile as the entrance.
+	def set_entrance (self):
+
+		self.ENTRANCE = True
+
+	# Sets the tile as the exit.
+	def set_exit (self):
+
+		self.EXIT = True
+
+	# Text that displays as the player(s) enter the tile.
 	def enter_text (self):
 
 		pass

@@ -1,4 +1,5 @@
 from helpers import generators as gen
+from helpers import debug
 from objects import characters
 
 
@@ -32,12 +33,13 @@ def main ():
 
 	print('Generating character {} with seed {}...'.format(name, seed))
 	player = characters.Character(name, seed, char)
-	print('Generating dungeon with seed {}...'.format(seed))
+	print('Generating world with seed {}...\n'.format(seed))
 	maze = gen.dungeon(maze_x, maze_y, seed)
 
-	print('Character created. Here are your stats:')
-	print()
-	print(player)
+	print('Character created. Here are your stats:\n')
+	print(player, '\n')
+	print('Here is the dungeon:\n')
+	print(debug.mazegen(maze))
 
 
 if __name__ == '__main__':

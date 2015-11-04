@@ -90,6 +90,7 @@ def dungeon (x, y, seed=None):
 	col = 0
 
 	entrance = grid[row][col]
+	entrance.set_entrance()
 	entrance.visited()
 
 	# Defines the selected tile and starts the stack.
@@ -166,3 +167,6 @@ def dungeon (x, y, seed=None):
 
 	# Picks a random exit tile along the eastern ([-1]) side.
 	exit = grid[random.randint(0, len(grid) - 1)][-1]
+	exit.set_exit()
+
+	return grid
