@@ -68,27 +68,23 @@ def dungeon (x, y, seed=None):
 	grid = []
 
 	for i in range(y):
-
 		row = []
-
 		for j in range(x):
-
-			walls = {
+			walls =
+			{
 				'north' 	: True,
 				'east'		: True,
 				'south'		: True,
 				'west'		: True
 			}
-
-			entities = {
+			entities =
+			{
 				'items': [],
 				'objects': [],
 				'enemies': [],
 				'npcs': []
 			}
-
 			row.append(tiles.DungeonTile(walls, entities))
-
 		grid.append(row)
 
 	# Picks a random starting entrance tile along the eastern ([0]) side.
@@ -107,6 +103,7 @@ def dungeon (x, y, seed=None):
 
 		while len(directions) > 0:
 			direction = random.choice(directions)
+			
 			if direction == 'north':
 				if row - 1 >= 0:
 					if grid[row - 1][col].VISITED == False:
@@ -115,9 +112,9 @@ def dungeon (x, y, seed=None):
 						grid[row][col].remove_wall('south')
 						grid[row][col].visted()
 						stack.append((row, col))
-						break
 					else:
 						directions.remove('north')
+
 			elif direction == 'east':
 				if col + 1 <= len(grid[row]):
 					if grid[row][col + 1].VISITED == False:
@@ -126,9 +123,9 @@ def dungeon (x, y, seed=None):
 						grid[row][col].remove_wall('west')
 						grid[row][col].visted()
 						stack.append((row, col))
-						break
 					else:
 						directions.remove('east')
+
 			elif direction == 'south':
 				if row + 1 <= len(grid):
 					if grid[row + 1][col].VISITED == False:
@@ -137,9 +134,9 @@ def dungeon (x, y, seed=None):
 						grid[row][col].remove_wall('north')
 						grid[row][col].visted()
 						stack.append((row, col))
-						break
 					else:
 						directions.remove('south')
+
 			elif direction == 'west':
 				if col - 1 >= 0:
 					if grid[row][col - 1].VISITED == False:
@@ -148,7 +145,6 @@ def dungeon (x, y, seed=None):
 						grid[row][col].remove_wall('east')
 						grid[row][col].visted()
 						stack.append((row, col))
-						break
 					else:
 						directions.remove('west')
 
@@ -156,4 +152,3 @@ def dungeon (x, y, seed=None):
 			stack.pop()
 			row = stack[-1][0]
 			col = stack[-1][1]
-			break
