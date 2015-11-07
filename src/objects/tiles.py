@@ -1,7 +1,22 @@
+# Default datasets for dungeon tiles.
+walls =	{
+	'north' 	: True,
+	'east'		: True,
+	'south'		: True,
+	'west'		: True
+}
+
+entities = {
+	'items'		: [],
+	'objects'	: [],
+	'enemies'	: [],
+	'npcs'		: []
+}
+
 # Defines a series of tiles with walls.
 class DungeonTile (object):
 
-	def __init__ (self, walls, entities):
+	def __init__ (self, walls=walls, entities=entities):
 
 		# Indentifies an identified tile for maze generation.
 		self.VISITED = False
@@ -16,17 +31,11 @@ class DungeonTile (object):
 		self.ENTRANCE	= False
 		self.EXIT		= False
 
-		# Defines a list of items on the tile.
-		self.ITEMS = entities['items']
-
-		# Defines a list of interactable objects on the tile.
-		self.OBJECTS = entities['objects']
-
-		# Defines a list of enemies on the tile.
-		self.ENEMIES = entities['enemies']
-
-		# Defines a list of NPCs on the tile.
-		self.NPCS = entities['npcs']
+		# Lists of various entities on the tile.
+		self.ITEMS 		= entities['items']
+		self.OBJECTS 	= entities['objects']
+		self.ENEMIES 	= entities['enemies']
+		self.NPCS 		= entities['npcs']
 
 	# Removes walls during generation.
 	def remove_wall (self, wall):
@@ -55,14 +64,27 @@ class DungeonTile (object):
 
 		self.EXIT = True
 
+	# Sets a list of items on the tile.
+	def set_items (self, items):
+
+		self.ITEMS = items
+
+	# Sets a list of interactable objects on the tile.
+	def set_objects (self, objects):
+
+		self.OBJECTS = objects
+
+	# Sets a list of enemies on the tile.
+	def set_enemies (self, enemies):
+
+		self.ENEMIES = enemies
+
+	# Sets a list of npcs on the tile.
+	def set_npcs (self, npcs):
+
+		self.NPCS = npcs
+
 	# Text that displays as the player(s) enter the tile.
 	def enter_text (self):
-
-		pass
-
-
-class TownTile (object):
-
-	def __init__ (self):
 
 		pass

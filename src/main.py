@@ -11,7 +11,7 @@ TODO:
 - Add battle handling
 - Add specials
 - Add initial generation and database handling
-- Port to some sort of JSON API or something???
+- Port to some sort of netsocket API or something???
 - Add webui
 """
 
