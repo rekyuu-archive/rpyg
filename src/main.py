@@ -86,8 +86,11 @@ def main ():
 
 				if msg.lower() == 'done':
 					party_done = True
-					return ( 'Party created!\n'
-						+ 'Please enter a seed now, or type "none" to create a random seed.')
+					return (
+						'Party created!\n'
+						+ 'Please enter a seed now, or type "none" to create a random seed.'
+					)
+
 				else:
 					if user in party:
 						add_msg = 'Changed {}\'s name to {}.\n\n'.format(party[user]['name'], msg)
@@ -96,11 +99,12 @@ def main ():
 						party[user] = {'name': msg}
 						add_msg = msg + ' has been added to the party.\n\n'
 
-					return ( add_msg
+					return (
+						add_msg
 						+ 'If anyone else would like to join, type your names now.\n'
 						+ 'You can also change your name if you want.\n'
 						+ 'If you are finished adding party members, type "done".'
-						)
+					)
 
 
 		# Generates characters and the world.
