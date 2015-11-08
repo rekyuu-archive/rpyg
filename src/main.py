@@ -123,7 +123,7 @@ def main ():
 
 			out = [
 				'World created with seed ' + seed + '.\n\n',
-				'Here are the party stats:\n\n'
+				'Here are the party stats:'
 			]
 
 			for user in party:
@@ -131,7 +131,7 @@ def main ():
 				char = gen.character(seed)
 				stats = characters.Character(name, seed, char)
 				party[user]['stats'] = stats
-				out.append(str(stats))
+				out.append('\n\n' + str(stats))
 
 			maze = gen.dungeon(3, 3, seed)
 			print(debug.mazegen(maze))
