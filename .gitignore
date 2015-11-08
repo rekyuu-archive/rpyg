@@ -1,6 +1,8 @@
+# Sensitive info
+auth.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
-tests/
 *.py[cod]
 
 # C extensions
