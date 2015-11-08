@@ -12,7 +12,6 @@ TODO:
 - Add battle handling
 - Add specials
 - Add initial generation and database handling
-- Port to some sort of netsocket API or something???
 - Add webui
 """
 
@@ -39,12 +38,6 @@ def listener (c):
 				break
 
 	return decorator
-
-
-def send (c, msg):
-
-	c.send(bytes(msg, 'utf8'))
-	print('>', msg)
 
 
 # Runs the main program.
