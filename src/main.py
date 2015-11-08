@@ -126,7 +126,7 @@ def main ():
 				'Here are the party stats:\n\n'
 			]
 
-			for user in list(party.keys()):
+			for user in party:
 				name = party[user]['name']
 				char = gen.character(seed)
 				stats = characters.Character(name, seed, char)
