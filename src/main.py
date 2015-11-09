@@ -1,6 +1,5 @@
-from helpers import generators as gen
-from helpers import debug
-from objects import characters, party
+from helpers import seed_gen
+from objects import characters, maze, party, town, world
 import pickle, socket
 
 
@@ -117,24 +116,35 @@ def main ():
 			msg = m['msg']
 
 			if msg.lower() == 'none':
-				seed = gen.seed(None)
+				seed = seed_gen.seed(None)
 			else:
-				seed = gen.seed(msg)
+				seed = seed_gen.seed(msg)
 
 			out = [
 				'World created with seed ' + seed + '.\n\n',
 				'Here are the party stats:'
 			]
 
+			# Party generation.
 			for member in members:
 				name = members[member]['name']
-				char = gen.character(name, seed)
-				stats = characters.Character(name, seed, char)
+				stats = characters.Character(name, seed)
 				members[member]['stats'] = stats
 				out.append('\n\n' + str(stats))
 
-			maze = gen.dungeon(3, 3, seed)
-			print(debug.mazegen(maze))
+			# World generation.
+			kingdom = world.World()
+
+			kingdom.add_area(town.Town(str(0) + seed))
+			kingdom.add_area(maze.Maze(3, 3, str(0) + seed))
+			print(kingdom.areas[1])
+
+			for i in range(1,3):
+				kingdom.add_area(town.Town(str(i) + seed).add_shop())
+				kingdom.add_area(maze.Maze(3 * (1 + i), 3 * (i), str(i) + seed))
+
+			print(kingdom.areas[3])
+			print(kingdom.areas[5])
 
 			out = ''.join(out)
 			return out

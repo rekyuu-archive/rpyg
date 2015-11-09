@@ -23,3 +23,7 @@ class Town (object):
 
 		return ''.join(name).title()
 
+	def add_shop (self):
+
+		self.shop = True
+
