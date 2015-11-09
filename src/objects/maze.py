@@ -57,19 +57,7 @@ class Maze (object):
 		for i in range(y):
 			row = []
 			for j in range(x):
-				walls =	{
-					'north' 	: True,
-					'east'		: True,
-					'south'		: True,
-					'west'		: True
-				}
-				entities = {
-					'items': [],
-					'objects': [],
-					'enemies': [],
-					'npcs': []
-				}
-				row.append(tiles.DungeonTile(walls, entities))
+				row.append(tiles.DungeonTile())
 			grid.append(row)
 
 		# Picks a random starting entrance tile along the western ([0]) side.
@@ -168,7 +156,7 @@ class Maze (object):
 		width = len(maze[0])
 		height = len(maze)
 
-		x_border = [' ']
+		x_border = []
 		for i in range(width):
 			x_border.append('+---')
 		x_border.append('+\n')
@@ -177,9 +165,9 @@ class Maze (object):
 		inner = []
 		for row in maze:
 			if row[0].entrance == True:
-				inner.append('  ')
+				inner.append(' ')
 			else:
-				inner.append(' |')
+				inner.append('|')
 			for tile in row:
 				if tile.wall_east == True:
 					if tile.exit == True:
@@ -189,7 +177,7 @@ class Maze (object):
 				else:
 					inner.append('    ')
 			inner.append('\n')
-			inner.append(' +')
+			inner.append('+')
 			for tile in row:
 				if tile.wall_south == True:
 					inner.append('---+')

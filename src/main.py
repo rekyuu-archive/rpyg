@@ -87,7 +87,8 @@ def main ():
 					party_done = True
 					return (
 						'Party created!\n'
-						+ 'Please enter a seed now, or type "none" to create a random seed.'
+						+ 'Send the extension of the base size of the world.\n'
+						+ 'Default world size is 3 towns and 3 dungeons.'
 					)
 
 				else:
@@ -106,11 +107,68 @@ def main ():
 					)
 
 
+		world_size = 3
+		world_size_done = False
+		# Determines base world size.
+		while True:
+
+			if world_size_done == True:
+				break
+
+			@listener(c)
+			def world_size_definition (m):
+
+				nonlocal world_size
+				nonlocal world_size_done
+
+				user = m['user']
+				msg = m['msg']
+
+				try:
+					size = int(msg)
+					world_size += size
+					world_size_done = True
+					return (
+						'Now send an extension of the base size of the rooms.\n'
+						+ 'Default base size is 3.'
+					)
+				except:
+					return 'Please be sure to send a single number.'
+
+
+		room_size = 1
+		room_size_done = False
+		# Determines base world size.
+		while True:
+
+			if room_size_done == True:
+				break
+
+			@listener(c)
+			def world_size_definition (m):
+
+				nonlocal room_size
+				nonlocal room_size_done
+
+				user = m['user']
+				msg = m['msg']
+
+				try:
+					size = int(msg)
+					room_size += size
+					room_size_done = True
+					return 'Please enter a seed, or type "none" to create a random seed.'
+				except:
+					return 'Please be sure to send a single number.'
+
+
 		# Generates characters and the world.
 		@listener(c)
 		def world_creation (m):
 
 			nonlocal members
+			nonlocal world_size
+			nonlocal room_size
 
 			user = m['user']
 			msg = m['msg']
@@ -133,18 +191,7 @@ def main ():
 				out.append('\n\n' + str(stats))
 
 			# World generation.
-			kingdom = world.World()
-
-			kingdom.add_area(town.Town(str(0) + seed))
-			kingdom.add_area(maze.Maze(3, 3, str(0) + seed))
-			print(kingdom.areas[1])
-
-			for i in range(1,3):
-				kingdom.add_area(town.Town(str(i) + seed).add_shop())
-				kingdom.add_area(maze.Maze(3 * (1 + i), 3 * (i), str(i) + seed))
-
-			print(kingdom.areas[3])
-			print(kingdom.areas[5])
+			kingdom = world.World(world_size, room_size, seed)
 
 			out = ''.join(out)
 			return out
