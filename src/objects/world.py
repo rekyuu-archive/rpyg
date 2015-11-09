@@ -16,10 +16,11 @@ class World (object):
 		m = maze.Maze(size + 2, size + 2, str(0) + seed)
 		areas.append(t)
 		areas.append(m)
-		print(m)
+		print(m.display_maze())
 
 		for i in range(1, rooms):
-			t = town.Town(str(i) + seed).add_shop()
+			t = town.Town(str(i) + seed)
+			t.add_shop()
 
 			x = (size + 2) * (1 + i)
 			y = (size + 2) * (i)
@@ -27,6 +28,6 @@ class World (object):
 
 			areas.append(t)
 			areas.append(m)
-			print(m)
+			print(m.display_maze())
 
 		return areas

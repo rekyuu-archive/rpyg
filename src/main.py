@@ -222,57 +222,57 @@ def main ():
 				if msg == 'help':
 					out = 'Ha, you wish!'
 
-				if type(group.world_position) is town.Town:
+				elif type(group.world_position) is town.Town:
 
 					if msg == 'leave':
 						next_area = kingdom.areas.index(group.world_position) + 1
 						group.move_world(kingdom.areas[next_area])
 						out = group.world_position.text(group.area_position)
 
-				if type(group.world_position) is maze.Maze:
+				elif type(group.world_position) is maze.Maze:
 
 					row = group.area_position[0]
 					col = group.area_position[1]
 					facing = group.facing
 
 					if msg == 'forward':
-						if facing = 'north':
+						if facing == 'north':
 							msg = 'north'
-						if facing = 'east':
+						if facing == 'east':
 							msg = 'east'
-						if facing = 'south':
+						if facing == 'south':
 							msg = 'south'
-						if facing = 'west':
+						if facing == 'west':
 							msg = 'west'
 
 					if msg == 'backward':
-						if facing = 'north':
+						if facing == 'north':
 							msg = 'south'
-						if facing = 'east':
+						if facing == 'east':
 							msg = 'west'
-						if facing = 'south':
+						if facing == 'south':
 							msg = 'north'
-						if facing = 'west':
+						if facing == 'west':
 							msg = 'east'
 
 					if msg == 'left':
-						if facing = 'north':
+						if facing == 'north':
 							msg = 'west'
-						if facing = 'east':
+						if facing == 'east':
 							msg = 'north'
-						if facing = 'south':
+						if facing == 'south':
 							msg = 'east'
-						if facing = 'west':
+						if facing == 'west':
 							msg = 'south'
 
 					if msg == 'right':
-						if facing = 'north':
+						if facing == 'north':
 							msg = 'east'
-						if facing = 'east':
+						if facing == 'east':
 							msg = 'south'
-						if facing = 'south':
+						if facing == 'south':
 							msg = 'west'
-						if facing = 'west':
+						if facing == 'west':
 							msg = 'north'
 
 					if msg == 'north':
@@ -314,6 +314,18 @@ def main ():
 							out = ['You moved west.\n']
 							out.append(group.world_position.text(group.area_position))
 							out = ''.join(out)
+
+					if msg in ['exit', 'leave']:
+						if group.world_position.tiles[row][col].exit:
+							next_area = kingdom.areas.index(group.world_position) + 1
+							group.move_world(kingdom.areas[next_area])
+							out = group.world_position.text(group.area_position)
+						elif group.world_position.tiles[row][col].entrance:
+							next_area = kingdom.areas.index(group.world_position) - 1
+							group.move_world(kingdom.areas[next_area])
+							out = group.world_position.text(group.area_position)
+						else:
+							out = 'You are not at an exit.'
 
 				if out == '':
 					out = 'I do not understand the command.'
