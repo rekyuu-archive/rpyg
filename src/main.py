@@ -1,6 +1,6 @@
 from helpers import generators as gen
 from helpers import debug
-from objects import characters
+from objects import characters, party
 import pickle, socket
 
 
@@ -68,7 +68,7 @@ def main ():
 
 
 		# Starts party creation.
-		party = {}
+		members = {}
 		party_done = False
 		while True:
 
@@ -78,7 +78,7 @@ def main ():
 			@listener(c)
 			def party_entry (m):
 
-				nonlocal party
+				nonlocal members
 				nonlocal party_done
 
 				user = m['user']
@@ -92,11 +92,11 @@ def main ():
 					)
 
 				else:
-					if user in party:
-						add_msg = 'Changed {}\'s name to {}.\n\n'.format(party[user]['name'], msg)
-						party[user] = {'name': msg}
+					if user in members:
+						add_msg = 'Changed {}\'s name to {}.\n\n'.format(members[user]['name'], msg)
+						members[user] = {'name': msg}
 					else:
-						party[user] = {'name': msg}
+						members[user] = {'name': msg}
 						add_msg = msg + ' has been added to the party.\n\n'
 
 					return (
@@ -111,7 +111,7 @@ def main ():
 		@listener(c)
 		def world_creation (m):
 
-			nonlocal party
+			nonlocal members
 
 			user = m['user']
 			msg = m['msg']
@@ -126,11 +126,11 @@ def main ():
 				'Here are the party stats:'
 			]
 
-			for user in party:
-				name = party[user]['name']
-				char = gen.character(seed)
+			for member in members:
+				name = members[member]['name']
+				char = gen.character(name, seed)
 				stats = characters.Character(name, seed, char)
-				party[user]['stats'] = stats
+				members[member]['stats'] = stats
 				out.append('\n\n' + str(stats))
 
 			maze = gen.dungeon(3, 3, seed)
@@ -139,12 +139,14 @@ def main ():
 			out = ''.join(out)
 			return out
 
+		group = party.Party(members)
+
 
 		# Closes the connection.
 		c.close()
 		print('-', addr)
 
-		break
+		#break
 
 
 if __name__ == '__main__':

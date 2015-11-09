@@ -11,13 +11,13 @@ def mazegen (maze):
 
 	inner = []
 	for row in maze:
-		if row[0].ENTRANCE == True:
+		if row[0].entrance == True:
 			inner.append('  ')
 		else:
 			inner.append(' |')
 		for tile in row:
-			if tile.WALL_EAST == True:
-				if tile.EXIT == True:
+			if tile.wall_east == True:
+				if tile.exit == True:
 					inner.append('    ')
 				else:
 					inner.append('   |')
@@ -26,7 +26,7 @@ def mazegen (maze):
 		inner.append('\n')
 		inner.append(' +')
 		for tile in row:
-			if tile.WALL_SOUTH == True:
+			if tile.wall_south == True:
 				inner.append('---+')
 			else:
 				inner.append('   +')

@@ -48,9 +48,9 @@ def get_level (xp):
 
 
 # Returns five Individual Values for each stat.
-def get_ivs (seed):
+def get_ivs (name, seed):
 
-	random.seed(seed)
+	random.seed(name + seed)
 	ivs = []
 	for i in range(5):
 		ivs.append(random.randint(0,7))
@@ -74,26 +74,26 @@ class Character (object):
 
 	def __init__ (self, name, seed, rand):
 
-		self.NAME 	= name
-		self.SEED 	= seed
-		self.RACE	= rand['race']
-		self.CLASS	= rand['class']
-		self.TITLE	= '{} the {} {}'.format(self.NAME, self.RACE, self.CLASS)
+		self.name 		= name
+		self.seed 		= seed
+		self.race		= rand['race']
+		self.char_class	= rand['class']
+		self.title		= '{} the {} {}'.format(self.name, self.race, self.char_class)
 
 		# Base stats.
-		self.IV					= get_ivs(self.SEED)
-		self.LV					= 1
-		self.XP					= 1
-		self.BASE_HP			= 20
-		self.BASE_ATTACK		= classes.roster[self.CLASS]['stats'][0]
-		self.BASE_INTEL 		= classes.roster[self.CLASS]['stats'][1]
-		self.BASE_MP	 		= 10
-		self.BASE_DEFENSE		= classes.roster[self.CLASS]['stats'][2]
-		self.BASE_SPEED 		= classes.roster[self.CLASS]['stats'][3]
+		self.iv					= get_ivs(self.name, self.seed)
+		self.lv					= 1
+		self.xp					= 1
+		self.base_hp			= 20
+		self.base_attack		= classes.roster[self.char_class]['stats'][0]
+		self.base_intel 		= classes.roster[self.char_class]['stats'][1]
+		self.base_mp	 		= 10
+		self.base_defense		= classes.roster[self.char_class]['stats'][2]
+		self.base_speed 		= classes.roster[self.char_class]['stats'][3]
 
 		# Decorative header for __str__().
 		header = []
-		i = len(list(self.TITLE))
+		i = len(list(self.title))
 		while i > 0:
 			header.append('=')
 			i -= 1
@@ -105,39 +105,39 @@ class Character (object):
 	# Updates stats on __init__() and on level_up().
 	def update_stats (self):
 
-		self.HP			= get_stat(self.BASE_HP, self.IV[0], self.LV) + self.LV
-		self.CUR_HP		= self.HP
-		self.ATTACK		= get_stat(self.BASE_ATTACK, self.IV[1], self.LV)
-		self.INTEL 		= get_stat(self.BASE_INTEL, self.IV[2], self.LV)
-		self.MP	 		= get_mp_stat(self.BASE_INTEL, self.LV) + self.LV
-		self.CUR_MP	 	= self.MP
-		self.DEFENSE	= get_stat(self.BASE_DEFENSE, self.IV[3], self.LV)
-		self.SPEED 		= get_stat(self.BASE_SPEED, self.IV[4], self.LV)
+		self.hp			= get_stat(self.base_hp, self.iv[0], self.lv) + self.lv
+		self.cur_hp		= self.hp
+		self.attack		= get_stat(self.base_attack, self.iv[1], self.lv)
+		self.intel 		= get_stat(self.base_intel, self.iv[2], self.lv)
+		self.mp	 		= get_mp_stat(self.base_intel, self.lv) + self.lv
+		self.cur_mp	 	= self.mp
+		self.defense	= get_stat(self.base_defense, self.iv[3], self.lv)
+		self.speed 		= get_stat(self.base_speed, self.iv[4], self.lv)
 
 	# Called when XP is earned. Will cheack for level ups when called.
 	def earn_xp (self, xp):
 
-		self.XP += xp
-		if get_level(self.XP) > self.LV:
+		self.xp += xp
+		if get_level(self.xp) > self.lv:
 			self.level_up()
 
 	# Levels the character and updates stats.
 	def level_up (self):
 
-		self.LV = get_level(self.XP)
+		self.lv = get_level(self.xp)
 		self.update_stats()
 
 	# Class readability.
 	def __str__ (self):
 
 		return (
-			self.TITLE + '\n'
+			self.title + '\n'
 			+ self.header + '\n'
-			+ 'Level: ' + str(self.LV) + '\n'
-			+ 'HP: ' + str(self.CUR_HP) + '/' + str(self.HP) + '\n'
-			+ 'MP: ' + str(self.CUR_MP) + '/' + str(self.MP) + '\n'
-			+ 'ATK: ' + str(self.ATTACK) + '\n'
-			+ 'INT: ' + str(self.INTEL) + '\n'
-			+ 'DEF: ' + str(self.DEFENSE) + '\n'
-			+ 'SPD: ' + str(self.SPEED)
+			+ 'Level: ' + str(self.lv) + '\n'
+			+ 'HP: ' + str(self.cur_hp) + '/' + str(self.hp) + '\n'
+			+ 'MP: ' + str(self.cur_mp) + '/' + str(self.mp) + '\n'
+			+ 'ATK: ' + str(self.attack) + '\n'
+			+ 'INT: ' + str(self.intel) + '\n'
+			+ 'DEF: ' + str(self.defense) + '\n'
+			+ 'SPD: ' + str(self.speed)
 		)

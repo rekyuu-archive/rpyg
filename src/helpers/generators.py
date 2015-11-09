@@ -20,9 +20,9 @@ def seed (seed=None):
 
 
 # Provides a random race and class for the character.
-def character (seed=None):
+def character (name, seed=None):
 
-	random.seed(seed)
+	random.seed(name + seed)
 
 	random_race = race_list[random.randint(0, len(race_list) - 1)]
 	random_class = random.choice(sorted(list(class_list.keys())))
@@ -91,7 +91,7 @@ def dungeon (x, y, seed=None):
 
 	entrance = grid[row][col]
 	entrance.set_entrance()
-	entrance.visited()
+	entrance.visit()
 
 	# Defines the selected tile and starts the stack.
 	stack = [(row, col)]
@@ -104,11 +104,11 @@ def dungeon (x, y, seed=None):
 
 			if direction == 'north':
 				if row - 1 >= 0:
-					if grid[row - 1][col].VISITED == False:
+					if grid[row - 1][col].visited == False:
 						grid[row][col].remove_wall('north')
 						row -= 1
 						grid[row][col].remove_wall('south')
-						grid[row][col].visited()
+						grid[row][col].visit()
 						stack.append((row, col))
 						break
 					else:
@@ -118,11 +118,11 @@ def dungeon (x, y, seed=None):
 
 			elif direction == 'east':
 				if col + 1 <= len(grid[row]) - 1:
-					if grid[row][col + 1].VISITED == False:
+					if grid[row][col + 1].visited == False:
 						grid[row][col].remove_wall('east')
 						col += 1
 						grid[row][col].remove_wall('west')
-						grid[row][col].visited()
+						grid[row][col].visit()
 						stack.append((row, col))
 						break
 					else:
@@ -132,11 +132,11 @@ def dungeon (x, y, seed=None):
 
 			elif direction == 'south':
 				if row + 1 <= len(grid) - 1:
-					if grid[row + 1][col].VISITED == False:
+					if grid[row + 1][col].visited == False:
 						grid[row][col].remove_wall('south')
 						row += 1
 						grid[row][col].remove_wall('north')
-						grid[row][col].visited()
+						grid[row][col].visit()
 						stack.append((row, col))
 						break
 					else:
@@ -146,11 +146,11 @@ def dungeon (x, y, seed=None):
 
 			elif direction == 'west':
 				if col - 1 >= 0:
-					if grid[row][col - 1].VISITED == False:
+					if grid[row][col - 1].visited == False:
 						grid[row][col].remove_wall('west')
 						col -= 1
 						grid[row][col].remove_wall('east')
-						grid[row][col].visited()
+						grid[row][col].visit()
 						stack.append((row, col))
 						break
 					else:
