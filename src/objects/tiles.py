@@ -14,9 +14,9 @@ entities = {
 }
 
 # Defines a series of tiles with walls.
-class DungeonTile (object):
+class Tile (object):
 
-	def __init__ (self, walls=walls, entities=entities):
+	def __init__ (self, walls=walls, entities=entities, text=''):
 
 		# Indentifies an identified tile for maze generation.
 		self.visited = False
@@ -36,6 +36,9 @@ class DungeonTile (object):
 		self.objects 	= entities['objects']
 		self.enemies 	= entities['enemies']
 		self.npcs 		= entities['npcs']
+
+		# Text that displays when the player enters the tile.
+		self.text		= text
 
 	# Removes walls during generation.
 	def remove_wall (self, wall):
@@ -87,4 +90,13 @@ class DungeonTile (object):
 	# Text that displays as the player(s) enter the tile.
 	def enter_text (self):
 
-		pass
+		out = ['You enter a dim corridor.']
+		if self.exit:
+			out.append('\nYou find yourself at the exit.')
+		out = ''.join(out)
+
+		return out
+
+	def set_text (self, text):
+
+		self.text = text

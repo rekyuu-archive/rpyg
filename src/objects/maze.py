@@ -9,10 +9,17 @@ class Maze (object):
 		self.seed = seed
 		self.width = width
 		self.height = height
-		self.tiles = self.generate_maze(self.seed)
 		self.biome = 'castle'
 		self.entrance = None
 		self.exit = None
+		self.tiles = self.generate_maze(self.seed)
+
+	def text (self, position):
+
+		x = position[0]
+		y = position[1]
+
+		return self.tiles[x][y].enter_text()
 
 	def generate_maze (self, seed):
 
@@ -57,7 +64,7 @@ class Maze (object):
 		for i in range(y):
 			row = []
 			for j in range(x):
-				row.append(tiles.DungeonTile())
+				row.append(tiles.Tile())
 			grid.append(row)
 
 		# Picks a random starting entrance tile along the western ([0]) side.
@@ -149,7 +156,7 @@ class Maze (object):
 
 		return grid
 
-	def __str__ (self):
+	def display_maze (self):
 
 		maze = self.tiles
 
@@ -191,3 +198,7 @@ class Maze (object):
 			x_border
 			+ inner
 		)
+
+	def __str__ (self):
+
+		return 'A FUCKING MAZE'

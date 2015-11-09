@@ -162,13 +162,13 @@ def main ():
 					return 'Please be sure to send a single number.'
 
 
+		kingdom = None
 		# Generates characters and the world.
 		@listener(c)
 		def world_creation (m):
 
 			nonlocal members
-			nonlocal world_size
-			nonlocal room_size
+			nonlocal kingdom
 
 			user = m['user']
 			msg = m['msg']
@@ -193,10 +193,132 @@ def main ():
 			# World generation.
 			kingdom = world.World(world_size, room_size, seed)
 
+			out.append('\n\n' + kingdom.areas[0].text())
+
 			out = ''.join(out)
 			return out
 
 		group = party.Party(members)
+		group.move_world(kingdom.areas[0])
+
+		adventure_done = False
+		# Main adventure.
+		while True:
+
+			if adventure_done == True:
+				break
+
+			@listener(c)
+			def adventure (m):
+
+				nonlocal group
+				nonlocal kingdom
+				nonlocal adventure_done
+
+				msg = m['msg'].lower()
+				user = m['user']
+				out = ''
+
+				if msg == 'help':
+					out = 'Ha, you wish!'
+
+				if type(group.world_position) is town.Town:
+
+					if msg == 'leave':
+						next_area = kingdom.areas.index(group.world_position) + 1
+						group.move_world(kingdom.areas[next_area])
+						out = group.world_position.text(group.area_position)
+
+				if type(group.world_position) is maze.Maze:
+
+					row = group.area_position[0]
+					col = group.area_position[1]
+					facing = group.facing
+
+					if msg == 'forward':
+						if facing = 'north':
+							msg = 'north'
+						if facing = 'east':
+							msg = 'east'
+						if facing = 'south':
+							msg = 'south'
+						if facing = 'west':
+							msg = 'west'
+
+					if msg == 'backward':
+						if facing = 'north':
+							msg = 'south'
+						if facing = 'east':
+							msg = 'west'
+						if facing = 'south':
+							msg = 'north'
+						if facing = 'west':
+							msg = 'east'
+
+					if msg == 'left':
+						if facing = 'north':
+							msg = 'west'
+						if facing = 'east':
+							msg = 'north'
+						if facing = 'south':
+							msg = 'east'
+						if facing = 'west':
+							msg = 'south'
+
+					if msg == 'right':
+						if facing = 'north':
+							msg = 'east'
+						if facing = 'east':
+							msg = 'south'
+						if facing = 'south':
+							msg = 'west'
+						if facing = 'west':
+							msg = 'north'
+
+					if msg == 'north':
+						if group.world_position.tiles[row][col].wall_north:
+							out = 'You cannot go that way.'
+						else:
+							group.move_position((row - 1, col))
+							group.now_facing('north')
+							out = ['You moved north.\n']
+							out.append(group.world_position.text(group.area_position))
+							out = ''.join(out)
+
+					if msg == 'east':
+						if group.world_position.tiles[row][col].wall_east:
+							out = 'You cannot go that way.'
+						else:
+							group.move_position((row, col + 1))
+							group.now_facing('east')
+							out = ['You moved east.\n']
+							out.append(group.world_position.text(group.area_position))
+							out = ''.join(out)
+
+					if msg == 'south':
+						if group.world_position.tiles[row][col].wall_south:
+							out = 'You cannot go that way.'
+						else:
+							group.move_position((row + 1, col))
+							group.now_facing('south')
+							out = ['You moved south.\n']
+							out.append(group.world_position.text(group.area_position))
+							out = ''.join(out)
+
+					if msg == 'west':
+						if group.world_position.tiles[row][col].wall_west:
+							out = 'You cannot go that way.'
+						else:
+							group.move_position((row, col - 1))
+							group.now_facing('west')
+							out = ['You moved west.\n']
+							out.append(group.world_position.text(group.area_position))
+							out = ''.join(out)
+
+				if out == '':
+					out = 'I do not understand the command.'
+
+				return out
 
 
 		# Closes the connection.
