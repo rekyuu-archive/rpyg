@@ -1,4 +1,4 @@
-from objects import maze, town
+from objects import mazes, towns
 
 
 class Party (object):
@@ -6,7 +6,6 @@ class Party (object):
 	def __init__ (self, members):
 
 		self.members = members
-		self.facing = None
 		self.world_position = None
 		self.area_position = None
 
@@ -15,11 +14,11 @@ class Party (object):
 		self.world_position = position
 		print('~ Set world position to', position)
 
-		if type(self.world_position) is maze.Maze:
+		if type(self.world_position) is mazes.Maze:
 			self.area_position = position.entrance
 			self.facing = 'east'
 
-		if type(self.world_position) is town.Town:
+		if type(self.world_position) is towns.Town:
 			self.area_position = (0, 0)
 			self.facing = None
 
