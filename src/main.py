@@ -10,10 +10,10 @@ direction = directions.Facing
 TODO:
 - Add items (weapons, armor, consumables, key)
 - Add enemies
-- Add world generation
+- Add item and enemy placement
 - Add battle handling
-- Add specials
-- Add initial generation and database handling
+- Add special moves
+- Add database handling
 - Add webui
 """
 
